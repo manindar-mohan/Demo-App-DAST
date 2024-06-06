@@ -19,10 +19,11 @@ jobs:
 
       - name: Copy files via SSH
         run: |
-          rsync -avz  --rsync-path "sudo rsync" --exclude '.github' --delete -e "ssh -o StrictHostKeyChecking=no -p 9874" ./ rejah@202.191.67.73:/var/www/html/
+          rsync -avz  --rsync-path "sudo rsync" --exclude '.git' --delete -e "ssh -o StrictHostKeyChecking=no -p 9874" ./ rejah@202.191.67.73:/var/www/html/
       - name: Restart nginx
         run: |
           ssh rejah@202.191.67.73 -p 9874 'sudo systemctl restart nginx'
+          ssh rejah@202.191.67.73 -p 9874 'sudo chmod 755 /var/www/html/'
       - name: Beagle Security Test
         uses: beaglesecurity/beagle-github-action@2.0.0
         env: 
