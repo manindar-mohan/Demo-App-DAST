@@ -1,0 +1,30 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - gh-pages
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy files via SSH
+        run: |
+          rsync -avz  --rsync-path "sudo rsync" --exclude '.github' --delete -e "ssh -o StrictHostKeyChecking=no -p 9874" ./ rejah@202.191.67.73:/var/www/html/
+      - name: Restart nginx
+        run: |
+          ssh rejah@202.191.67.73 -p 9874 'sudo systemctl restart nginx'
+      # - name: Beagle Security Test
+      #   uses: beaglesecurity/beagle-github-action@2.0.0
+      #   env: 
+      #     access_token: ${{secrets.access_token}}
+      #     application_token: ${{secrets.application_token}}
