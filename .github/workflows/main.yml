@@ -23,8 +23,8 @@ jobs:
       - name: Restart nginx
         run: |
           ssh rejah@202.191.67.73 -p 9874 'sudo systemctl restart nginx'
-      # - name: Beagle Security Test
-      #   uses: beaglesecurity/beagle-github-action@2.0.0
-      #   env: 
-      #     access_token: ${{secrets.access_token}}
-      #     application_token: ${{secrets.application_token}}
+      - name: Beagle Security Test
+        uses: beaglesecurity/beagle-github-action@2.0.0
+        env: 
+          access_token: ${{secrets.access_token}}
+          application_token: ${{secrets.application_token}}
