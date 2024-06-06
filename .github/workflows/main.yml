@@ -3,7 +3,7 @@ name: Deploy to Ubuntu Server
 on:
   push:
     branches:
-      - gh-pages
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-latest
